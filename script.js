@@ -1,5 +1,5 @@
 // --- Configuration ---
-const targetDate = new Date("2026-04-13T00:00:00").getTime();
+const targetDate = new Date("2026-04-13T00:00:00Z").getTime();
 
 // --- Floating Particles ---
 function initParticles() {
