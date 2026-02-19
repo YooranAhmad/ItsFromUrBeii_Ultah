@@ -157,10 +157,45 @@ function initFloatingHearts() {
     }
 }
 
+// --- Music Control ---
+function initMusic() {
+    const music = document.getElementById('bg-music');
+    const toggle = document.getElementById('music-toggle');
+    if (!music || !toggle) return;
+
+    let isPlaying = false;
+
+    const toggleMusic = () => {
+        if (isPlaying) {
+            music.pause();
+            toggle.classList.remove('playing');
+        } else {
+            music.play().catch(e => console.log("Music play blocked:", e));
+            toggle.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    };
+
+    toggle.addEventListener('click', toggleMusic);
+
+    // Auto-play on first interaction (browsers block true autoplay)
+    const startOnInteraction = () => {
+        if (!isPlaying) {
+            toggleMusic();
+        }
+        document.removeEventListener('click', startOnInteraction);
+        document.removeEventListener('scroll', startOnInteraction);
+    };
+
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('scroll', startOnInteraction);
+}
+
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
     initScrollReveal();
+    initMusic();
 
     // Hero animations
     const heroContent = document.querySelector('.hero-content');
